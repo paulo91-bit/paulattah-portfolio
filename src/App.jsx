@@ -3,7 +3,7 @@ import { Mail, MapPin, Phone, Server, Shield, Cloud, Terminal, Award, ExternalLi
 
 /**
  * Paul Attah - The "Daylight Architect" Portfolio
- * Updated: High-Fidelity Isometric Ecosystem + AI & Automation Hub
+ * Updated: Standardized Experience Section + Isometric Ecosystem + AI Hub
  */
 
 const CloudSimulation = () => {
@@ -33,7 +33,6 @@ const CloudSimulation = () => {
       const group = new THREE.Group();
       scene.add(group);
 
-      // --- ASSETS ---
       const meshMat = new THREE.MeshBasicMaterial({ 
         color: mainColor, 
         wireframe: true, 
@@ -41,7 +40,6 @@ const CloudSimulation = () => {
         opacity: 0.3 
       });
 
-      // 1. The Cloud (Top Layer)
       const cloudGroup = new THREE.Group();
       const sphereGeom = new THREE.SphereGeometry(0.8, 12, 12);
       for(let i=0; i<4; i++) {
@@ -52,13 +50,11 @@ const CloudSimulation = () => {
       cloudGroup.position.set(4, 4, -2);
       group.add(cloudGroup);
 
-      // 2. Central Database (The Core)
       const dbGeom = new THREE.CylinderGeometry(0.8, 0.8, 1.2, 16);
       const db = new THREE.Mesh(dbGeom, meshMat);
       db.position.set(0, -1, 0);
       group.add(db);
 
-      // 3. Infrastructure Gadgets
       const createMobile = (x, z, rot) => {
         const mobile = new THREE.Group();
         const body = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.05, 0.8), meshMat);
@@ -245,7 +241,7 @@ const App = () => {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          access_key: "f8505eef-290b-4fb6-82ec-7524b3752e69",
+          access_key: import.meta.env.VITE_WEB3FORMS_KEY || "f8505eef-290b-4fb6-82ec-7524b3752e69",
           from_name: "Portfolio Contact Form",
           subject: `Portfolio Message from ${formData.name}`,
           ...formData,
@@ -289,7 +285,7 @@ const App = () => {
             <div className="absolute inset-0 bg-[#68A893] rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-700 animate-pulse" />
             <img src="https://github.com/paulo91-bit.png" alt="Paul Attah" className="relative w-32 h-32 rounded-full grayscale hover:grayscale-0 transition-all duration-700 object-cover shadow-2xl border-4 border-white" />
           </div>
-          <h2 className="text-xs md:text-sm tracking-[0.4em] text-gray-400 uppercase font-semibold mb-4">Senior Cloud & DevOps Engineer</h2>
+          <h2 className="text-xs md:text-sm tracking-[0.4em] text-gray-400 uppercase font-semibold mb-4 text-center">Senior Cloud & DevOps Engineer</h2>
           <h1 className="text-5xl md:text-7xl font-bold text-gray-800 tracking-tight mb-8 font-mono">Paul_Attah<span className="text-[#68A893]">.tf</span><span className="animate-pulse font-light">_</span></h1>
           <div className="flex gap-8 text-xs tracking-widest uppercase text-gray-400 font-semibold mt-4 flex-wrap justify-center">
             {['about', 'ai-hub', 'experience', 'skills', 'certifications', 'projects'].map(link => <a key={link} href={`#${link}`} className="hover:text-[#68A893] transition-colors whitespace-nowrap">{link.replace('-', ' ')}</a>)}
@@ -315,11 +311,10 @@ const App = () => {
         </div>
       </section>
 
-      {/* NEW: AI & AUTOMATION SECTION */}
+      {/* AI & AUTOMATION SECTION */}
       <section id="ai-hub" ref={aiRef} className="py-32 px-8 bg-[#1A202C] text-white overflow-hidden relative">
         <div className="max-w-6xl mx-auto relative z-10">
           <h3 className="text-center text-sm tracking-[0.5em] text-[#68A893] uppercase font-semibold mb-20">A I & A U T O M A T I O N</h3>
-          
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
               <div className="inline-flex items-center gap-2 bg-[#68A893]/20 text-[#68A893] px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase">
@@ -329,7 +324,6 @@ const App = () => {
               <p className="text-gray-400 text-lg leading-relaxed">
                 I build intelligent agents that move beyond static scripts. By integrating Large Language Models and semantic search into infrastructure pipelines, I create systems that can self-heal, auto-generate documentation, and predict scaling requirements before they happen.
               </p>
-              
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="bg-gray-800/40 p-6 rounded-2xl border border-gray-700/50">
                   <Zap className="text-[#68A893] mb-4" size={24} />
@@ -343,8 +337,6 @@ const App = () => {
                 </div>
               </div>
             </div>
-            
-            {/* AI Micro-UI Visualizer */}
             <div className="bg-[#2D3748]/30 p-8 rounded-[2.5rem] border border-gray-700/50 backdrop-blur-md relative h-[500px]">
                <AiAgentVisualizer />
             </div>
@@ -352,18 +344,39 @@ const App = () => {
         </div>
       </section>
 
-      <section id="experience" ref={experienceRef} className="py-24 bg-gray-50/50 border-y border-gray-100 overflow-hidden relative">
-        <h3 className="text-center text-sm tracking-[0.5em] text-gray-400 uppercase font-semibold mb-16">E X P E R I E N C E</h3>
-        <div className="flex gap-8 overflow-x-auto pb-12 px-8 max-w-[100vw] snap-x snap-mandatory hide-scrollbar">
-          <ExperienceCard title="Senior Cloud Infrastructure Eng." company="Enbros Technologies" date="JAN 2024 - PRESENT" icons={[<Cloud size={16}/>, <Terminal size={16}/>, <Shield size={16}/>]} bullets={["Designed scalable multi-cloud infrastructure (Azure, AWS, GCP).", "Standardized IaC pipelines using Terraform.", "Configured secure network segments and VPN tunnels."]} />
-          <ExperienceCard title="Infrastructure & Platform Lead" company="NdaraAI" date="JAN 2024 - DEC 2024" icons={[<Server size={16}/>, <Terminal size={16}/>]} bullets={["Architected resilient virtualization clusters using Proxmox.", "Authored custom Bash and Python scripts for disaster recovery.", "Engineered secure perimeters with Nginx reverse proxies."]} />
-          <ExperienceCard title="IT Systems Administrator" company="ValueGate Consulting" date="JAN 2020 - JAN 2024" icons={[<Shield size={16}/>, <Server size={16}/>]} bullets={["Administered corporate IT including Windows Server and AD.", "Maintained seamless network connectivity via routing/switching.", "Developed SOPs for server hardening."]} />
+      {/* EXPERIENCE SECTION - Updated to Standard Centered Grid with Shadows */}
+      <section id="experience" ref={experienceRef} className="py-32 px-8 bg-gray-50/50 border-y border-gray-100 relative">
+        <div className="max-w-6xl mx-auto">
+          <h3 className="text-center text-sm tracking-[0.5em] text-gray-400 uppercase font-semibold mb-20">E X P E R I E N C E</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+            <ExperienceCard 
+              title="Senior Cloud Infrastructure Eng." 
+              company="Enbros Technologies" 
+              date="JAN 2024 - PRESENT" 
+              icons={[<Cloud size={16}/>, <Terminal size={16}/>, <Shield size={16}/>]} 
+              bullets={["Designed scalable multi-cloud infrastructure (Azure, AWS, GCP).", "Standardized IaC pipelines using Terraform.", "Configured secure network segments and VPN tunnels."]} 
+            />
+            <ExperienceCard 
+              title="Infrastructure & Platform Lead" 
+              company="NdaraAI" 
+              date="JAN 2024 - DEC 2024" 
+              icons={[<Server size={16}/>, <Terminal size={16}/>]} 
+              bullets={["Architected resilient virtualization clusters using Proxmox.", "Authored custom Bash and Python scripts for disaster recovery.", "Engineered secure perimeters with Nginx reverse proxies."]} 
+            />
+            <ExperienceCard 
+              title="IT Systems Administrator" 
+              company="ValueGate Consulting" 
+              date="JAN 2020 - JAN 2024" 
+              icons={[<Shield size={16}/>, <Server size={16}/>]} 
+              bullets={["Administered corporate IT including Windows Server and AD.", "Maintained seamless network connectivity via routing/switching.", "Developed SOPs for server hardening."]} 
+            />
+          </div>
         </div>
       </section>
 
       <section id="skills" className="py-24 px-8 max-w-6xl mx-auto"><h3 className="text-center text-sm tracking-[0.5em] text-gray-400 uppercase font-semibold mb-16">S K I L L S & T E L E M E T R Y</h3><div className="grid grid-cols-1 lg:grid-cols-2 gap-8"><DiagnosticShufflerLight /><NeuralStreamLight /></div></section>
 
-      <section id="certifications" ref={certsRef} className="py-24 bg-gray-50/50 border-y border-gray-100 relative"><h3 className="text-center text-sm tracking-[0.5em] text-gray-400 uppercase font-semibold mb-16">C E R T I F I C A T I O N S</h3><div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto px-8"><CertCard title="Google Certified Associate Cloud Engineer" issuer="Google Cloud" /><CertCard title="Azure Developer Associate (AZ-204)" issuer="Microsoft" /><CertCard title="Microsoft Sentinel Ninja Training" issuer="Microsoft Security" /><CertCard title="McKinsey Forward Program Graduate" issuer="McKinsey & Company" /></div></section>
+      <section id="certifications" ref={certsRef} className="py-24 bg-gray-50/50 border-y border-gray-100 relative"><h3 className="text-center text-sm tracking-[0.5em] text-gray-400 uppercase font-semibold mb-16">C E R T I F I C A T I O L N S</h3><div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto px-8"><CertCard title="Google Certified Associate Cloud Engineer" issuer="Google Cloud" /><CertCard title="Azure Developer Associate (AZ-204)" issuer="Microsoft" /><CertCard title="Microsoft Sentinel Ninja Training" issuer="Microsoft Security" /><CertCard title="McKinsey Forward Program Graduate" issuer="McKinsey & Company" /></div></section>
 
       <section id="projects" ref={projectsRef} className="py-24 px-8 max-w-6xl mx-auto"><h3 className="text-center text-sm tracking-[0.5em] text-gray-400 uppercase font-semibold mb-16">P R O J E C T S</h3><div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"><ProjectCard title="sql-ai-semantic-search" description="AI-powered semantic search engine using PostgreSQL (pgvector) and OpenAI Embeddings." tech={['Python', 'PostgreSQL', 'OpenAI']} link="https://github.com/paulo91-bit/sql-ai-semantic-search" /><ProjectCard title="maigie" description="An AI-powered study companion designed to help students organize learning and track progress." tech={['TypeScript', 'React', 'AI']} link="https://github.com/paulo91-bit/maigie" /><ProjectCard title="product_backend_devops" description="IaC and CI/CD pipeline demonstrations for automated backend deployments and scaling." tech={['Python', 'Terraform', 'CI/CD']} link="https://github.com/paulo91-bit/product_backend_devops" /></div></section>
 
@@ -372,19 +385,16 @@ const App = () => {
       </section>
 
       <footer className="py-8 text-center text-gray-400 text-sm bg-white border-t border-gray-100">Paul Attah © 2026. Built with React & Tailwind.</footer>
-      <style dangerouslySetInnerHTML={{ __html: `.hide-scrollbar::-webkit-scrollbar { display: none; } .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }`}} />
     </div>
   );
 };
 
-// --- AI Hub Specific Visualizer ---
 const AiAgentVisualizer = () => {
   const [tasks, setTasks] = useState([
     { id: 1, name: "Log_Analyzer", status: "Active", progress: 85 },
     { id: 2, name: "Security_Audit", status: "Scanning", progress: 42 },
     { id: 3, name: "Auto_Scaler", status: "Idle", progress: 0 }
   ]);
-
   useEffect(() => {
     const interval = setInterval(() => {
       setTasks(prev => prev.map(t => {
@@ -398,51 +408,62 @@ const AiAgentVisualizer = () => {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
-
   return (
     <div className="h-full flex flex-col justify-between font-mono">
       <div className="flex justify-between items-start">
-        <div>
-          <div className="text-[#68A893] text-xs mb-1">AGENT_REGISTRY_STATUS</div>
-          <div className="text-2xl font-bold">NODE_01_AI</div>
-        </div>
-        <div className="bg-[#68A893]/10 text-[#68A893] p-3 rounded-xl border border-[#68A893]/20">
-          <Cpu className="animate-pulse" size={20} />
-        </div>
+        <div><div className="text-[#68A893] text-xs mb-1">AGENT_REGISTRY_STATUS</div><div className="text-2xl font-bold text-white">NODE_01_AI</div></div>
+        <div className="bg-[#68A893]/10 text-[#68A893] p-3 rounded-xl border border-[#68A893]/20"><Cpu className="animate-pulse" size={20} /></div>
       </div>
-
       <div className="space-y-6 my-12">
         {tasks.map(task => (
           <div key={task.id} className="space-y-2">
-            <div className="flex justify-between text-[10px] tracking-widest text-gray-400">
-              <span>{task.name}</span>
-              <span className={task.status === 'Executing' ? 'text-green-400' : ''}>{task.status}</span>
-            </div>
-            <div className="h-1 w-full bg-gray-700 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-[#68A893] transition-all duration-500 ease-out"
-                style={{ width: `${task.progress}%` }}
-              />
-            </div>
+            <div className="flex justify-between text-[10px] tracking-widest text-gray-400"><span>{task.name}</span><span className={task.status === 'Executing' ? 'text-green-400' : ''}>{task.status}</span></div>
+            <div className="h-1 w-full bg-gray-700 rounded-full overflow-hidden"><div className="h-full bg-[#68A893] transition-all duration-500 ease-out" style={{ width: `${task.progress}%` }} /></div>
           </div>
         ))}
       </div>
-
-      <div className="bg-black/40 p-4 rounded-xl border border-gray-700 text-[10px] text-gray-500 space-y-1">
-        <div>&gt; Loading semantic_embeddings...</div>
-        <div>&gt; Initializing agent_handshake...</div>
-        <div>&gt; System stable. AI_AGENTS_READY.</div>
-      </div>
+      <div className="bg-black/40 p-4 rounded-xl border border-gray-700 text-[10px] text-gray-500 space-y-1"><div>&gt; Loading semantic_embeddings...</div><div>&gt; Initializing agent_handshake...</div><div>&gt; System stable. AI_AGENTS_READY.</div></div>
     </div>
   );
 };
 
-// --- REUSED COMPONENTS ---
 const LinkedinIcon = ({ size = 20 }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>);
 const GithubIcon = ({ size = 20 }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3-.3 6-1.5 6-6.5a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 5 3 6.2 6 6.5a4.8 4.8 0 0 0-1 3.2v4"></path><path d="M9 18c-4.5 1.6-5-2.5-7-3"></path></svg>);
 const CertCard = ({ title, issuer }) => (<div className="flex items-center gap-6 p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"><div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center border border-gray-100 flex-shrink-0"><Award size={20} className="text-[#68A893]" /></div><div><h4 className="text-gray-800 font-bold text-sm md:text-base">{title}</h4><p className="text-[#68A893] text-xs font-semibold uppercase tracking-wider mt-1">{issuer}</p></div></div>);
 const ProjectCard = ({ title, description, tech, link }) => (<div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow flex flex-col h-full"><div className="flex justify-between items-start mb-6"><div className="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center border border-gray-100"><Code size={20} className="text-[#68A893]"/></div><a href={link} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-[#68A893] transition-colors"><ExternalLink size={20} /></a></div><h4 className="text-xl font-bold text-gray-800 mb-3">{title}</h4><p className="text-gray-500 text-sm leading-relaxed mb-6 flex-grow">{description}</p><div className="flex flex-wrap gap-2 mt-auto">{tech.map((t, i) => <span key={i} className="text-[10px] font-bold uppercase tracking-wider text-[#68A893] bg-[#68A893]/10 px-3 py-1 rounded-full">{t}</span>)}</div></div>);
-const ExperienceCard = ({ title, company, date, icons, bullets }) => (<div className="min-w-[320px] md:min-w-[400px] snap-center bg-white p-8 rounded-3xl shadow-sm border border-gray-100"><div className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center mb-6 border border-gray-100"><Server size={24} className="text-[#68A893]"/></div><h4 className="text-xl font-bold text-gray-800">{title}</h4><h5 className="text-[#68A893] font-semibold mb-4">{company}</h5><div className="flex gap-3 mb-6 text-gray-400">{icons.map((icon, i) => <span key={i} className="bg-gray-50 p-2 rounded-lg border border-gray-100">{icon}</span>)}</div><div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-6">{date}</div><ul className="space-y-3 text-sm text-gray-500">{bullets.map((b, i) => <li key={i} className="flex gap-3 items-start"><span className="text-[#68A893] mt-1">•</span><span className="leading-relaxed">{b}</span></li>)}</ul></div>);
+
+// Updated ExperienceCard with standard centering and shadow
+const ExperienceCard = ({ title, company, date, icons, bullets }) => (
+  <div className="w-full max-w-[380px] bg-white p-8 rounded-[2rem] border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:shadow-[#68A893]/10 transition-all duration-300">
+    <div className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center mb-6 border border-gray-100">
+      <Server size={24} className="text-[#68A893]"/>
+    </div>
+    <h4 className="text-xl font-bold text-gray-800 mb-1">{title}</h4>
+    <h5 className="text-[#68A893] font-semibold mb-4">{company}</h5>
+    
+    <div className="flex gap-3 mb-6 text-gray-400">
+      {icons.map((icon, i) => (
+        <span key={i} className="bg-gray-50 p-2 rounded-lg border border-gray-100 flex items-center justify-center">
+          {icon}
+        </span>
+      ))}
+    </div>
+    
+    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6 border-b border-gray-50 pb-2 inline-block">
+      {date}
+    </div>
+    
+    <ul className="space-y-4 text-sm text-gray-500">
+      {bullets.map((b, i) => (
+        <li key={i} className="flex gap-3 items-start">
+          <div className="w-1.5 h-1.5 rounded-full bg-[#68A893] mt-1.5 shrink-0" />
+          <span className="leading-relaxed">{b}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
 const DiagnosticShufflerLight = () => {
   const [labels, setLabels] = useState(["AWS Architecture", "Terraform IaC", "Zero-Trust IAM"]);
   useEffect(() => { const timer = setInterval(() => { setLabels(prev => { const next = [...prev]; const last = next.pop(); next.unshift(last); return next; }); }, 3000); return () => clearInterval(timer); }, []);
