@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Mail, MapPin, Phone, Server, Shield, Cloud, Terminal, Award, ExternalLink, Code, CheckCircle, XCircle } from 'lucide-react';
+import { Mail, MapPin, Phone, Server, Shield, Cloud, Terminal, Award, ExternalLink, Code, CheckCircle, XCircle, Cpu, Zap, Activity } from 'lucide-react';
 
 /**
  * Paul Attah - The "Daylight Architect" Portfolio
- * Updated: High-Fidelity Isometric Ecosystem (Cloud, Mobile, WiFi, Servers)
+ * Updated: High-Fidelity Isometric Ecosystem + AI & Automation Hub
  */
 
 const CloudSimulation = () => {
@@ -59,8 +59,6 @@ const CloudSimulation = () => {
       group.add(db);
 
       // 3. Infrastructure Gadgets
-      
-      // Gadget: Mobile Phones
       const createMobile = (x, z, rot) => {
         const mobile = new THREE.Group();
         const body = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.05, 0.8), meshMat);
@@ -72,7 +70,6 @@ const CloudSimulation = () => {
         return mobile;
       };
 
-      // Gadget: WiFi Node (Signal Tower)
       const createWifiNode = (x, z) => {
         const tower = new THREE.Group();
         const base = new THREE.Mesh(new THREE.BoxGeometry(0.3, 1, 0.3), meshMat);
@@ -80,14 +77,11 @@ const CloudSimulation = () => {
         top.position.y = 0.6;
         tower.add(base, top);
         tower.position.set(x, -0.8, z);
-        
-        // Signal pulses
         const pulses = [];
         for(let i=0; i<3; i++) {
           const ring = new THREE.Mesh(new THREE.RingGeometry(0.2, 0.25, 32), new THREE.MeshBasicMaterial({ color: mainColor, transparent: true, opacity: 0.2, side: THREE.DoubleSide }));
           ring.rotation.x = Math.PI / 2;
           ring.position.y = 0.6;
-          ring.userData = { speed: 0.01 * (i + 1), radius: 0.2 };
           tower.add(ring);
           pulses.push(ring);
         }
@@ -106,7 +100,6 @@ const CloudSimulation = () => {
       
       group.add(phone1, phone2, wifi, terminal);
 
-      // 4. Cables / Paths
       const lineMat = new THREE.LineBasicMaterial({ color: mainColor, transparent: true, opacity: 0.1 });
       const drawLine = (p1, p2) => {
         const geom = new THREE.BufferGeometry().setFromPoints([p1, p2]);
@@ -121,39 +114,29 @@ const CloudSimulation = () => {
       drawLine(dbTop, wifi.position);
       drawLine(dbTop, terminal.position);
 
-      // 5. Data Packets
       const packets = [];
       const packetGeom = new THREE.SphereGeometry(0.06, 8, 8);
       const packetMat = new THREE.MeshBasicMaterial({ color: mainColor });
 
-      const createPacket = (start, end) => {
+      const nodes = [phone1.position, phone2.position, wifi.position, terminal.position];
+      nodes.forEach(node => {
         const p = new THREE.Mesh(packetGeom, packetMat);
-        p.userData = { start, end, progress: Math.random() };
+        p.userData = { start: node, end: dbTop, progress: Math.random() };
         packets.push(p);
         group.add(p);
-      };
-
-      const nodes = [phone1.position, phone2.position, wifi.position, terminal.position];
-      nodes.forEach(node => createPacket(node, dbTop));
-      createPacket(dbTop, cloudOrigin);
+      });
 
       const animate = () => {
         requestAnimationFrame(animate);
         const time = Date.now() * 0.001;
-
         cloudGroup.position.y = 4 + Math.sin(time) * 0.2;
         
-        // Animate WiFi pulses
-        wifi.userData.pulses.forEach(p => {
+        wifi.userData.pulses.forEach((p, i) => {
           p.scale.setScalar(p.scale.x + 0.01);
           p.material.opacity -= 0.003;
-          if(p.scale.x > 3) {
-            p.scale.setScalar(1);
-            p.material.opacity = 0.2;
-          }
+          if(p.scale.x > 3) { p.scale.setScalar(1); p.material.opacity = 0.2; }
         });
 
-        // Animate Packets
         packets.forEach(p => {
           p.userData.progress += 0.004;
           if (p.userData.progress > 1) p.userData.progress = 0;
@@ -165,15 +148,14 @@ const CloudSimulation = () => {
       };
 
       animate();
-
       const handleResize = () => {
+        if (!mountRef.current) return;
         const newWidth = mountRef.current.clientWidth;
         const newHeight = mountRef.current.clientHeight;
         camera.aspect = newWidth / newHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(newWidth, newHeight);
       };
-
       window.addEventListener('resize', handleResize);
       return () => {
         window.removeEventListener('resize', handleResize);
@@ -208,6 +190,7 @@ const App = () => {
 
   const heroRef = useRef(null);
   const aboutRef = useRef(null);
+  const aiRef = useRef(null);
   const experienceRef = useRef(null);
   const projectsRef = useRef(null);
   const certsRef = useRef(null);
@@ -238,7 +221,7 @@ const App = () => {
           scale: 1.05, opacity: 0.3, duration: 4, yoyo: true, repeat: -1, ease: "sine.inOut", stagger: 0.5
         });
 
-        [aboutRef.current, experienceRef.current, projectsRef.current, certsRef.current].forEach((sec) => {
+        [aboutRef.current, aiRef.current, experienceRef.current, projectsRef.current, certsRef.current].forEach((sec) => {
           if (sec) {
             gsap.from(sec, {
               scrollTrigger: { trigger: sec, start: "top 80%" },
@@ -308,8 +291,8 @@ const App = () => {
           </div>
           <h2 className="text-xs md:text-sm tracking-[0.4em] text-gray-400 uppercase font-semibold mb-4">Senior Cloud & DevOps Engineer</h2>
           <h1 className="text-5xl md:text-7xl font-bold text-gray-800 tracking-tight mb-8 font-mono">Paul_Attah<span className="text-[#68A893]">.tf</span><span className="animate-pulse font-light">_</span></h1>
-          <div className="flex gap-8 text-xs tracking-widest uppercase text-gray-400 font-semibold mt-4">
-            {['about', 'experience', 'skills', 'certifications', 'projects'].map(link => <a key={link} href={`#${link}`} className="hover:text-[#68A893] transition-colors">{link}</a>)}
+          <div className="flex gap-8 text-xs tracking-widest uppercase text-gray-400 font-semibold mt-4 flex-wrap justify-center">
+            {['about', 'ai-hub', 'experience', 'skills', 'certifications', 'projects'].map(link => <a key={link} href={`#${link}`} className="hover:text-[#68A893] transition-colors whitespace-nowrap">{link.replace('-', ' ')}</a>)}
           </div>
         </div>
       </section>
@@ -319,7 +302,6 @@ const App = () => {
         <h3 className="text-center text-sm tracking-[0.5em] text-gray-400 uppercase font-semibold mb-20">A B O U T</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div className="bg-[#1A202C] rounded-[2.5rem] overflow-hidden shadow-2xl aspect-square md:aspect-auto md:min-h-[500px] flex items-center justify-center border border-gray-800 relative group">
-             {/* High-Fidelity Isometric Ecosystem Simulation */}
             <CloudSimulation />
           </div>
           <div>
@@ -327,7 +309,44 @@ const App = () => {
             <div className="text-gray-500 leading-relaxed space-y-6 text-lg">
               <p>Hey. I am a Senior Cloud & Infrastructure Engineer based in Lagos, Nigeria. I specialize in architecting, deploying, and maintaining scalable, high-availability IT infrastructures across hybrid environments.</p>
               <p>With a strong foundation in <span className="font-semibold text-gray-700 underline decoration-[#68A893]/30 decoration-4 underline-offset-4">Terraform, Kubernetes, and Multi-Cloud architectures</span>, I bridge the gap between development and operations.</p>
-              <p>The isometric simulation you see here represents the interconnected nature of modern cloud ecosystems. From global edge nodes to localized mobile devices and wireless endpoints, I ensure every packet reaches its destination with zero latency and absolute security.</p>
+              <p>The isometric simulation you see here represents the interconnected nature of modern cloud ecosystems. I ensure every packet reaches its destination with zero latency and absolute security.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* NEW: AI & AUTOMATION SECTION */}
+      <section id="ai-hub" ref={aiRef} className="py-32 px-8 bg-[#1A202C] text-white overflow-hidden relative">
+        <div className="max-w-6xl mx-auto relative z-10">
+          <h3 className="text-center text-sm tracking-[0.5em] text-[#68A893] uppercase font-semibold mb-20">A I & A U T O M A T I O N</h3>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-8">
+              <div className="inline-flex items-center gap-2 bg-[#68A893]/20 text-[#68A893] px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase">
+                <Cpu size={14} /> Agentic Infrastructure
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Beyond Automation: <span className="text-[#68A893]">Autonomous Systems.</span></h2>
+              <p className="text-gray-400 text-lg leading-relaxed">
+                I build intelligent agents that move beyond static scripts. By integrating Large Language Models and semantic search into infrastructure pipelines, I create systems that can self-heal, auto-generate documentation, and predict scaling requirements before they happen.
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="bg-gray-800/40 p-6 rounded-2xl border border-gray-700/50">
+                  <Zap className="text-[#68A893] mb-4" size={24} />
+                  <h4 className="font-bold mb-2">Self-Healing Agents</h4>
+                  <p className="text-xs text-gray-500 leading-relaxed">Autonomous agents that monitor logs and execute remediation scripts in real-time.</p>
+                </div>
+                <div className="bg-gray-800/40 p-6 rounded-2xl border border-gray-700/50">
+                  <Activity className="text-[#68A893] mb-4" size={24} />
+                  <h4 className="font-bold mb-2">Semantic Ops</h4>
+                  <p className="text-xs text-gray-500 leading-relaxed">Using pgvector and LLMs to query complex infrastructure documentation naturally.</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* AI Micro-UI Visualizer */}
+            <div className="bg-[#2D3748]/30 p-8 rounded-[2.5rem] border border-gray-700/50 backdrop-blur-md relative h-[500px]">
+               <AiAgentVisualizer />
             </div>
           </div>
         </div>
@@ -358,6 +377,67 @@ const App = () => {
   );
 };
 
+// --- AI Hub Specific Visualizer ---
+const AiAgentVisualizer = () => {
+  const [tasks, setTasks] = useState([
+    { id: 1, name: "Log_Analyzer", status: "Active", progress: 85 },
+    { id: 2, name: "Security_Audit", status: "Scanning", progress: 42 },
+    { id: 3, name: "Auto_Scaler", status: "Idle", progress: 0 }
+  ]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTasks(prev => prev.map(t => {
+        if (t.name === "Auto_Scaler" && Math.random() > 0.8) return { ...t, status: "Executing", progress: 10 };
+        if (t.status === "Executing") {
+           const nextProgress = t.progress + 15;
+           return nextProgress >= 100 ? { ...t, status: "Idle", progress: 0 } : { ...t, progress: nextProgress };
+        }
+        return { ...t, progress: (t.progress + Math.random() * 2) % 100 };
+      }));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="h-full flex flex-col justify-between font-mono">
+      <div className="flex justify-between items-start">
+        <div>
+          <div className="text-[#68A893] text-xs mb-1">AGENT_REGISTRY_STATUS</div>
+          <div className="text-2xl font-bold">NODE_01_AI</div>
+        </div>
+        <div className="bg-[#68A893]/10 text-[#68A893] p-3 rounded-xl border border-[#68A893]/20">
+          <Cpu className="animate-pulse" size={20} />
+        </div>
+      </div>
+
+      <div className="space-y-6 my-12">
+        {tasks.map(task => (
+          <div key={task.id} className="space-y-2">
+            <div className="flex justify-between text-[10px] tracking-widest text-gray-400">
+              <span>{task.name}</span>
+              <span className={task.status === 'Executing' ? 'text-green-400' : ''}>{task.status}</span>
+            </div>
+            <div className="h-1 w-full bg-gray-700 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-[#68A893] transition-all duration-500 ease-out"
+                style={{ width: `${task.progress}%` }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="bg-black/40 p-4 rounded-xl border border-gray-700 text-[10px] text-gray-500 space-y-1">
+        <div>&gt; Loading semantic_embeddings...</div>
+        <div>&gt; Initializing agent_handshake...</div>
+        <div>&gt; System stable. AI_AGENTS_READY.</div>
+      </div>
+    </div>
+  );
+};
+
+// --- REUSED COMPONENTS ---
 const LinkedinIcon = ({ size = 20 }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>);
 const GithubIcon = ({ size = 20 }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3-.3 6-1.5 6-6.5a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 5 3 6.2 6 6.5a4.8 4.8 0 0 0-1 3.2v4"></path><path d="M9 18c-4.5 1.6-5-2.5-7-3"></path></svg>);
 const CertCard = ({ title, issuer }) => (<div className="flex items-center gap-6 p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"><div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center border border-gray-100 flex-shrink-0"><Award size={20} className="text-[#68A893]" /></div><div><h4 className="text-gray-800 font-bold text-sm md:text-base">{title}</h4><p className="text-[#68A893] text-xs font-semibold uppercase tracking-wider mt-1">{issuer}</p></div></div>);
