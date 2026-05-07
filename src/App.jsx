@@ -241,8 +241,6 @@ const App = () => {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          // Senior Practice: Rely strictly on Environment Variables.
-          // Fallback removed for maximum security.
           access_key: import.meta.env.VITE_WEB3FORMS_KEY,
           from_name: "Portfolio Contact Form",
           subject: `Portfolio Message from ${formData.name}`,
@@ -459,7 +457,17 @@ const CertCard = ({ title, issuer }) => (<div className="flex items-center gap-6
 const ProjectCard = ({ title, description, tech, link }) => (<div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow flex flex-col h-full"><div className="flex justify-between items-start mb-6"><div className="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center border border-gray-100"><Code size={20} className="text-[#68A893]"/></div><a href={link} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-[#68A893] transition-colors"><ExternalLink size={20} /></a></div><h4 className="text-xl font-bold text-gray-800 mb-3">{title}</h4><p className="text-gray-500 text-sm leading-relaxed mb-6 flex-grow">{description}</p><div className="flex flex-wrap gap-2 mt-auto">{tech.map((t, i) => <span key={i} className="text-[10px] font-bold uppercase tracking-wider text-[#68A893] bg-[#68A893]/10 px-3 py-1 rounded-full">{t}</span>)}</div></div>);
 
 const DiagnosticShufflerLight = () => {
-  const [labels, setLabels] = useState(["AWS Architecture", "Terraform IaC", "Zero-Trust IAM"]);
+  const [labels, setLabels] = useState([
+    "AWS",
+    "Azure", 
+    "Terraform IaC", 
+    "Google Cloud (GCP)", 
+    "Virtualization", 
+    "Advanced Networking", 
+    "Prometheus Monitoring", 
+    "Kubernetes (K8s)", 
+    "Zero-Trust Security"
+  ]);
   useEffect(() => { const timer = setInterval(() => { setLabels(prev => { const next = [...prev]; const last = next.pop(); next.unshift(last); return next; }); }, 3000); return () => clearInterval(timer); }, []);
   return (<div className="relative h-[300px] bg-white rounded-[2rem] p-8 overflow-hidden border border-gray-100 shadow-sm flex flex-col justify-between"><div className="flex justify-between items-start text-gray-400"><Cloud size={20} /><span className="text-[10px] tracking-widest uppercase font-bold">Skill Shuffler</span></div><div className="relative flex-1 flex flex-col items-center justify-center mt-8">{labels.map((label, i) => (<div key={label} className="absolute bg-gray-50 border border-gray-100 rounded-2xl p-6 w-full max-w-[240px] shadow-sm transition-all duration-[800ms]" style={{ transform: `translateY(${(i - 1) * 40}px) scale(${1 - i * 0.1})`, zIndex: 10 - i, opacity: 1 - i * 0.3 }}><div className="text-gray-800 font-bold text-sm text-center">{label}</div><div className="h-1 w-8 bg-[#68A893] mx-auto mt-3 rounded-full" /></div>))}</div></div>);
 };
