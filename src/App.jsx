@@ -9,6 +9,9 @@ import { Mail, MapPin, Phone, Server, Shield, Cloud, Terminal, Award, ExternalLi
 
 const App = () => {
   const [scrolled, setScrolled] = useState(false);
+  // Add this new state for the form
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+
   const heroRef = useRef(null);
   const aboutRef = useRef(null);
   const experienceRef = useRef(null);
@@ -74,6 +77,18 @@ const App = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Add this function to handle the email submission
+  const handleEmailSubmit = (e) => {
+    e.preventDefault();
+    const { name, email, subject, message } = formData;
+    
+    // Construct the mailto link with the form data
+    const mailtoLink = `mailto:attahattah37@gmail.com?subject=${encodeURIComponent(subject || 'New Contact from Portfolio')}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+    
+    // Open the user's default email client
+    window.location.href = mailtoLink;
+  };
+
   return (
     <div className="bg-[#FDFDFD] text-[#2D3748] font-sans overflow-x-hidden selection:bg-[#68A893] selection:text-white">
       
@@ -133,9 +148,9 @@ const App = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div className="rounded-3xl overflow-hidden shadow-xl aspect-square md:aspect-auto md:h-[500px]">
             <img 
-              src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-              alt="Infrastructure Workspace" 
-              className="w-full h-full object-cover grayscale opacity-90"
+              src="https://github.com/paulo91-bit.png" 
+              alt="Paul Attah" 
+              className="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 transition-all duration-500"
             />
           </div>
           <div>
@@ -266,15 +281,43 @@ const App = () => {
           </div>
         </div>
 
-        <form className="max-w-2xl mx-auto space-y-4">
+        <form onSubmit={handleEmailSubmit} className="max-w-2xl mx-auto space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input type="text" placeholder="Name" className="w-full bg-gray-200/60 text-gray-800 px-6 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#68A893] transition-all" />
-            <input type="email" placeholder="Email" className="w-full bg-gray-200/60 text-gray-800 px-6 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#68A893] transition-all" />
+            <input 
+              type="text" 
+              placeholder="Name" 
+              required
+              value={formData.name}
+              onChange={(e) => setFormData({...formData, name: e.target.value})}
+              className="w-full bg-gray-200/60 text-gray-800 px-6 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#68A893] transition-all" 
+            />
+            <input 
+              type="email" 
+              placeholder="Email" 
+              required
+              value={formData.email}
+              onChange={(e) => setFormData({...formData, email: e.target.value})}
+              className="w-full bg-gray-200/60 text-gray-800 px-6 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#68A893] transition-all" 
+            />
           </div>
-          <input type="text" placeholder="Subject" className="w-full bg-gray-200/60 text-gray-800 px-6 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#68A893] transition-all" />
-          <textarea placeholder="Message" rows={5} className="w-full bg-gray-200/60 text-gray-800 px-6 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#68A893] transition-all resize-none"></textarea>
+          <input 
+            type="text" 
+            placeholder="Subject" 
+            required
+            value={formData.subject}
+            onChange={(e) => setFormData({...formData, subject: e.target.value})}
+            className="w-full bg-gray-200/60 text-gray-800 px-6 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#68A893] transition-all" 
+          />
+          <textarea 
+            placeholder="Message" 
+            rows={5} 
+            required
+            value={formData.message}
+            onChange={(e) => setFormData({...formData, message: e.target.value})}
+            className="w-full bg-gray-200/60 text-gray-800 px-6 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#68A893] transition-all resize-none"
+          ></textarea>
           
-          <button type="button" className="w-full bg-[#68A893] hover:bg-[#578E7C] text-white font-bold py-4 rounded-xl transition-colors shadow-lg shadow-[#68A893]/30">
+          <button type="submit" className="w-full bg-[#68A893] hover:bg-[#578E7C] text-white font-bold py-4 rounded-xl transition-colors shadow-lg shadow-[#68A893]/30">
             Submit
           </button>
         </form>
