@@ -3,7 +3,7 @@ import { Mail, MapPin, Phone, Server, Shield, Cloud, Terminal, Award, ExternalLi
 
 /**
  * Paul Attah - The "Daylight Architect" Portfolio
- * Updated: Standardized Experience Section + Isometric Ecosystem + AI Hub
+ * Final Security Update: Key removed from source code, relying solely on Environment Variables.
  */
 
 const CloudSimulation = () => {
@@ -241,7 +241,9 @@ const App = () => {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          access_key: import.meta.env.VITE_WEB3FORMS_KEY || "f8505eef-290b-4fb6-82ec-7524b3752e69",
+          // Senior Practice: Rely strictly on Environment Variables.
+          // Fallback removed for maximum security.
+          access_key: import.meta.env.VITE_WEB3FORMS_KEY,
           from_name: "Portfolio Contact Form",
           subject: `Portfolio Message from ${formData.name}`,
           ...formData,
@@ -344,7 +346,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* EXPERIENCE SECTION - Updated to Standard Centered Grid with Shadows */}
+      {/* EXPERIENCE SECTION */}
       <section id="experience" ref={experienceRef} className="py-32 px-8 bg-gray-50/50 border-y border-gray-100 relative">
         <div className="max-w-6xl mx-auto">
           <h3 className="text-center text-sm tracking-[0.5em] text-gray-400 uppercase font-semibold mb-20">E X P E R I E N C E</h3>
@@ -376,7 +378,7 @@ const App = () => {
 
       <section id="skills" className="py-24 px-8 max-w-6xl mx-auto"><h3 className="text-center text-sm tracking-[0.5em] text-gray-400 uppercase font-semibold mb-16">S K I L L S & T E L E M E T R Y</h3><div className="grid grid-cols-1 lg:grid-cols-2 gap-8"><DiagnosticShufflerLight /><NeuralStreamLight /></div></section>
 
-      <section id="certifications" ref={certsRef} className="py-24 bg-gray-50/50 border-y border-gray-100 relative"><h3 className="text-center text-sm tracking-[0.5em] text-gray-400 uppercase font-semibold mb-16">C E R T I F I C A T I O L N S</h3><div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto px-8"><CertCard title="Google Certified Associate Cloud Engineer" issuer="Google Cloud" /><CertCard title="Azure Developer Associate (AZ-204)" issuer="Microsoft" /><CertCard title="Microsoft Sentinel Ninja Training" issuer="Microsoft Security" /><CertCard title="McKinsey Forward Program Graduate" issuer="McKinsey & Company" /></div></section>
+      <section id="certifications" ref={certsRef} className="py-24 bg-gray-50/50 border-y border-gray-100 relative"><h3 className="text-center text-sm tracking-[0.5em] text-gray-400 uppercase font-semibold mb-16">C E R T I F I C A T I O N S</h3><div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto px-8"><CertCard title="Google Certified Associate Cloud Engineer" issuer="Google Cloud" /><CertCard title="Azure Developer Associate (AZ-204)" issuer="Microsoft" /><CertCard title="Microsoft Sentinel Ninja Training" issuer="Microsoft Security" /><CertCard title="McKinsey Forward Program Graduate" issuer="McKinsey & Company" /></div></section>
 
       <section id="projects" ref={projectsRef} className="py-24 px-8 max-w-6xl mx-auto"><h3 className="text-center text-sm tracking-[0.5em] text-gray-400 uppercase font-semibold mb-16">P R O J E C T S</h3><div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"><ProjectCard title="sql-ai-semantic-search" description="AI-powered semantic search engine using PostgreSQL (pgvector) and OpenAI Embeddings." tech={['Python', 'PostgreSQL', 'OpenAI']} link="https://github.com/paulo91-bit/sql-ai-semantic-search" /><ProjectCard title="maigie" description="An AI-powered study companion designed to help students organize learning and track progress." tech={['TypeScript', 'React', 'AI']} link="https://github.com/paulo91-bit/maigie" /><ProjectCard title="product_backend_devops" description="IaC and CI/CD pipeline demonstrations for automated backend deployments and scaling." tech={['Python', 'Terraform', 'CI/CD']} link="https://github.com/paulo91-bit/product_backend_devops" /></div></section>
 
@@ -427,12 +429,6 @@ const AiAgentVisualizer = () => {
   );
 };
 
-const LinkedinIcon = ({ size = 20 }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>);
-const GithubIcon = ({ size = 20 }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3-.3 6-1.5 6-6.5a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 5 3 6.2 6 6.5a4.8 4.8 0 0 0-1 3.2v4"></path><path d="M9 18c-4.5 1.6-5-2.5-7-3"></path></svg>);
-const CertCard = ({ title, issuer }) => (<div className="flex items-center gap-6 p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"><div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center border border-gray-100 flex-shrink-0"><Award size={20} className="text-[#68A893]" /></div><div><h4 className="text-gray-800 font-bold text-sm md:text-base">{title}</h4><p className="text-[#68A893] text-xs font-semibold uppercase tracking-wider mt-1">{issuer}</p></div></div>);
-const ProjectCard = ({ title, description, tech, link }) => (<div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow flex flex-col h-full"><div className="flex justify-between items-start mb-6"><div className="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center border border-gray-100"><Code size={20} className="text-[#68A893]"/></div><a href={link} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-[#68A893] transition-colors"><ExternalLink size={20} /></a></div><h4 className="text-xl font-bold text-gray-800 mb-3">{title}</h4><p className="text-gray-500 text-sm leading-relaxed mb-6 flex-grow">{description}</p><div className="flex flex-wrap gap-2 mt-auto">{tech.map((t, i) => <span key={i} className="text-[10px] font-bold uppercase tracking-wider text-[#68A893] bg-[#68A893]/10 px-3 py-1 rounded-full">{t}</span>)}</div></div>);
-
-// Updated ExperienceCard with standard centering and shadow
 const ExperienceCard = ({ title, company, date, icons, bullets }) => (
   <div className="w-full max-w-[380px] bg-white p-8 rounded-[2rem] border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:shadow-[#68A893]/10 transition-all duration-300">
     <div className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center mb-6 border border-gray-100">
@@ -440,19 +436,12 @@ const ExperienceCard = ({ title, company, date, icons, bullets }) => (
     </div>
     <h4 className="text-xl font-bold text-gray-800 mb-1">{title}</h4>
     <h5 className="text-[#68A893] font-semibold mb-4">{company}</h5>
-    
     <div className="flex gap-3 mb-6 text-gray-400">
       {icons.map((icon, i) => (
-        <span key={i} className="bg-gray-50 p-2 rounded-lg border border-gray-100 flex items-center justify-center">
-          {icon}
-        </span>
+        <span key={i} className="bg-gray-50 p-2 rounded-lg border border-gray-100 flex items-center justify-center">{icon}</span>
       ))}
     </div>
-    
-    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6 border-b border-gray-50 pb-2 inline-block">
-      {date}
-    </div>
-    
+    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6 border-b border-gray-50 pb-2 inline-block">{date}</div>
     <ul className="space-y-4 text-sm text-gray-500">
       {bullets.map((b, i) => (
         <li key={i} className="flex gap-3 items-start">
@@ -464,6 +453,11 @@ const ExperienceCard = ({ title, company, date, icons, bullets }) => (
   </div>
 );
 
+const LinkedinIcon = ({ size = 20 }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>);
+const GithubIcon = ({ size = 20 }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3-.3 6-1.5 6-6.5a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 5 3 6.2 6 6.5a4.8 4.8 0 0 0-1 3.2v4"></path><path d="M9 18c-4.5 1.6-5-2.5-7-3"></path></svg>);
+const CertCard = ({ title, issuer }) => (<div className="flex items-center gap-6 p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"><div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center border border-gray-100 flex-shrink-0"><Award size={20} className="text-[#68A893]" /></div><div><h4 className="text-gray-800 font-bold text-sm md:text-base">{title}</h4><p className="text-[#68A893] text-xs font-semibold uppercase tracking-wider mt-1">{issuer}</p></div></div>);
+const ProjectCard = ({ title, description, tech, link }) => (<div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow flex flex-col h-full"><div className="flex justify-between items-start mb-6"><div className="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center border border-gray-100"><Code size={20} className="text-[#68A893]"/></div><a href={link} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-[#68A893] transition-colors"><ExternalLink size={20} /></a></div><h4 className="text-xl font-bold text-gray-800 mb-3">{title}</h4><p className="text-gray-500 text-sm leading-relaxed mb-6 flex-grow">{description}</p><div className="flex flex-wrap gap-2 mt-auto">{tech.map((t, i) => <span key={i} className="text-[10px] font-bold uppercase tracking-wider text-[#68A893] bg-[#68A893]/10 px-3 py-1 rounded-full">{t}</span>)}</div></div>);
+
 const DiagnosticShufflerLight = () => {
   const [labels, setLabels] = useState(["AWS Architecture", "Terraform IaC", "Zero-Trust IAM"]);
   useEffect(() => { const timer = setInterval(() => { setLabels(prev => { const next = [...prev]; const last = next.pop(); next.unshift(last); return next; }); }, 3000); return () => clearInterval(timer); }, []);
@@ -474,7 +468,13 @@ const NeuralStreamLight = () => {
   const messages = ["Provisioning GCP nodes...", "Executing terraform apply...", "Scaling Kubernetes pods...", "Hardening security policies..."];
   const [msgIndex, setMsgIndex] = useState(0);
   useEffect(() => { let charIndex = 0; const type = () => { const currentMsg = messages[msgIndex]; if (charIndex < currentMsg.length) { setText(currentMsg.substring(0, charIndex + 1)); charIndex++; setTimeout(type, 50); } else { setTimeout(() => { setMsgIndex((msgIndex + 1) % messages.length); charIndex = 0; }, 2000); } }; type(); }, [msgIndex]);
-  return (<div className="h-[300px] bg-[#1A202C] rounded-[2rem] p-8 shadow-sm flex flex-col justify-between relative overflow-hidden"><div className="flex justify-between items-start text-gray-500"><Terminal size={20} /><div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" /><span className="text-[10px] uppercase font-bold tracking-widest">Live Terminal</span></div></div><div className="font-mono text-green-400 text-sm mt-8"><span className="text-gray-500 mr-2">paulo@root:~$</span>{text}<span className="inline-block w-2 h-4 bg-green-400 ml-1 animate-pulse" /></div><div className="space-y-1 font-mono text-[10px] text-gray-600 mt-auto"><div>[OK] INIT_INFRASTRUCTURE</div><div>[OK] SECRETS_LOADED</div><div>[PENDING] AWAITING_COMMAND</div></div></div>);
+  return (
+    <div className="h-[300px] bg-[#1A202C] rounded-[2rem] p-8 shadow-sm flex flex-col justify-between relative overflow-hidden">
+      <div className="flex justify-between items-start text-gray-500"><Terminal size={20} /><div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" /><span className="text-[10px] uppercase font-bold tracking-widest">Live Terminal</span></div></div>
+      <div className="font-mono text-green-400 text-sm mt-8"><span className="text-gray-500 mr-2">paulo@root:~$</span>{text}<span className="inline-block w-2 h-4 bg-green-400 ml-1 animate-pulse" /></div>
+      <div className="space-y-1 font-mono text-[10px] text-gray-600 mt-auto"><div>[OK] INIT_INFRASTRUCTURE</div><div>[OK] SECRETS_LOADED</div><div>[PENDING] AWAITING_COMMAND</div></div>
+    </div>
+  );
 };
 
 export default App;
